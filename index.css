@@ -107,3 +107,10 @@ h1 {
 .avatar-contact-list a:hover {
     background-color: var(--secondary);
 }
+.inputContainer {
+    display: flex;
+    justify-content: center;
+}
+.search {
+    width: 50%
+}

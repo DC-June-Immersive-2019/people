@@ -3,11 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 const employeeContainer = document.querySelector('.container');
 
-
 function createEmployee2(el) {
     const newEmployee = document.createElement('div');
-    newEmployee.classList.add('AppElement');
-    newEmployee.id = ('AppComponent');
     newEmployee.innerHTML = 
     `<section class="avatar">
 <div class="avatar-image">
@@ -30,61 +27,59 @@ function createEmployee2(el) {
 </section>`;
     employeeContainer.appendChild(newEmployee);
 };
-// createEmployee2();
-const bootyData = userData.results.map(element => {
-    return {
-        picture: element.picture.large,
-        name: element.name.first + " " + element.name.last,
-        location: element.location.street + '<br>' + element.location.city + element.location.state + '<br>' + element.location.postcode,
-        email: element.email,
-        phone: element.cell
 
-
-    }
-})
-console.log(bootyData);
-bootyData.map(createEmployee2);
-
-const body = document.querySelector('body');
-
-body.style.display = 'flex';
-body.style.flexDirection = 'column';
-employeeContainer.style.order = '5';
-
-const searchBarContainer = document.createElement('div');
-searchBarContainer.style.backgroundColor = "gray";
-searchBarContainer.style.height = '100px';
-searchBarContainer.style.width = '100vw';
-searchBarContainer.style.order = '1';
-body.appendChild(searchBarContainer);
-console.log(body);
-
-const searchBarList = document.createElement('ol');
-searchBarList.style.height = '100px';
-searchBarList.style.display = 'flex';
-searchBarList.style.margin = '0';
-searchBarList.style.padding = '0';
-searchBarList.style.justifyContent = 'space-evenly';
-searchBarList.style.alignItems = 'center';
-searchBarList.addEventListener('click', filterByLastName);
-searchBarContainer.appendChild(searchBarList);
-
+// search bar
 const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'other', 'reset'];
-Letters.forEach( let => {
-    const searchBarLetters = document.createElement('li');
-    searchBarLetters.classList.add('letter');
-    searchBarLetters.style.listStyle = 'none';
-    searchBarLetters.style.color = 'black';
-    searchBarLetters.style.backgroundColor = 'white';
-    searchBarLetters.style.padding = '10px';
-    searchBarLetters.style.border = 'black 1px solid'
 
-    searchBarList.appendChild(searchBarLetters);
-    searchBarLetters.innerHTML = let;
-})
+function createSearchBar() {
+    const body = document.querySelector('body');
 
-// Filter by Last Name
-function filterByLastName(event) {
+    body.style.display = 'flex';
+    body.style.flexDirection = 'column';
+    employeeContainer.style.order = '5';
+
+    const searchBarContainer = document.createElement('div');
+    searchBarContainer.style.backgroundColor = "gray";
+    searchBarContainer.style.height = '100px';
+    searchBarContainer.style.width = '100vw';
+    searchBarContainer.style.order = '1';
+    body.appendChild(searchBarContainer);
+
+    const searchBarList = document.createElement('ol');
+    searchBarList.classList = "search-bar-list"
+    searchBarList.style.height = '100px';
+    searchBarList.style.display = 'flex';
+    searchBarList.style.margin = '0';
+    searchBarList.style.padding = '0';
+    searchBarList.style.justifyContent = 'space-evenly';
+    searchBarList.style.alignItems = 'center';
+    searchBarContainer.appendChild(searchBarList);
+
+    Letters.forEach( letter => {
+        const searchBarLetters = document.createElement('li');
+        searchBarLetters.classList.add('letter');
+        searchBarLetters.style.listStyle = 'none';
+        searchBarLetters.style.color = 'black';
+        searchBarLetters.style.backgroundColor = 'white';
+        searchBarLetters.style.padding = '10px';
+        searchBarLetters.style.border = 'black 1px solid'
+
+        searchBarList.appendChild(searchBarLetters);
+        searchBarLetters.innerHTML = letter;
+    })
+}
+
+// check for entries
+function checkEmpty(filteredBootyData){
+    if(!filteredBootyData.length){
+        const newEmployee = document.createElement('div');
+        newEmployee.style.textAlign = 'center';
+        newEmployee.innerHTML = "<h1 style = 'color:red'>Nada</h1>";
+        employeeContainer.appendChild(newEmployee)
+    }
+}
+// Filter by Name
+function filterByName(event, bootyData) {
     // If an item (not the container) is clicked
     if (event.target !== event.currentTarget) {
         // if 'reset' is selected
@@ -110,8 +105,32 @@ function filterByLastName(event) {
     }
 }
 
-// Default display All
-bootyData.map(createEmployee2);
+
+// the fetch
+let userData;
+const start = () => {
+    const employeeContainer = document.querySelector('.container');
+    fetch('https://randomuser.me/api/?results=50')
+    .then(res=> res.json())
+    .then(res => {
+        createSearchBar()
+        const searchBarList = document.querySelector('.search-bar-list')
+        const bootyData = res.results.map(element=> {
+            return {
+        'picture': element.picture.large,
+        'name': element.name.first + " " + element.name.last,
+        'location': element.location.street + '<br>' + element.location.city + element.location.state + '<br>' + element.location.postcode,
+        'email': element.email,
+        'phone': element.cell}
+        })
+        searchBarList.addEventListener('click', e=> filterByName(e, bootyData));
+        console.log(res)
+        bootyData.forEach(createEmployee2);
+    })
+}
+start();
+
+
 
 /*
 

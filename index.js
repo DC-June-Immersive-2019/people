@@ -92,6 +92,7 @@ function filterByName(event, bootyData) {
                 item => !Letters.includes(item.name[0].toUpperCase())
                 );
             employeeContainer.innerHTML = ""
+            checkEmpty(filteredBootyData);
             filteredBootyData.map(createEmployee2)
         }
         // else, populate according to the selected letter
@@ -100,6 +101,7 @@ function filterByName(event, bootyData) {
                 item => event.target.innerHTML.toLowerCase() === item.name.toLowerCase()[0]
                 );
             employeeContainer.innerHTML = ""
+            checkEmpty(filteredBootyData);
             filteredBootyData.map(createEmployee2)
         }
     }
@@ -133,13 +135,10 @@ start();
 
 
 /*
-
 We are going to create an Employee address book.  We will
 use the existing "avatar" code to add employees to the screen
-
 1)  Update the JavaScript code to read all of the user data from
     the people.js file and show all the users on the page
 2)  Add a filter to the data to only return users whose last
     name start with a given letter
-
 */

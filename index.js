@@ -14,3 +14,20 @@ use the existing "avatar" code to add employees to the screen
     name start with a given letter
 
 */
+
+
+
+
+
+const newArray = userData.results.map( (user) => {
+    return {
+        picture : `${user.picture.thumbnail}`,
+        name : `${user.name.first} ${user.name.last}`,
+        location : `${user.location.street} 
+        ${user.location.city} ${user.location.state}
+        ${user.location.postcode}`,
+        email : `${user.email}`,
+        phone : `${user.phone}`
+    }
+    
+});

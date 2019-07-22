@@ -107,3 +107,12 @@ h1 {
 .avatar-contact-list a:hover {
     background-color: var(--secondary);
 }
+.letterConatiner{
+    background-color: #efefef;
+    padding: 10px;
+    display: flex;
+    color:purple;
+    justify-content: space-around;
+    width: 90vw;
+    border: 1px purple solid;
+}

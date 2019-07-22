@@ -15,7 +15,7 @@ use the existing "avatar" code to add employees to the screen
 
 */
 
-function pineCone(userArray) {
+function sortArray(userArray) {
 
     const newArray = userArray.map( (user) => {
         return {
@@ -56,7 +56,7 @@ function pineCone(userArray) {
 
 }
 
-function pineappleBear(userData) { 
+function searchBar(userData) { 
     const search = document.querySelector('.search')
     search.style.display ='flex'
     search.style.height = "auto"
@@ -89,7 +89,7 @@ function pineappleBear(userData) {
                 return user.name.last[0] === letter.toLowerCase()
             })
             console.log(filtered)
-            pineCone(filtered)
+            sortArray(filtered)
         }
 
     })
@@ -101,6 +101,6 @@ fetch('https://randomuser.me/api/?results=50')
 .then(res => res.json())
 .then (res => {
     userData = (res)
-    pineappleBear(userData)
-    pineCone(userData.results)
+    searchBar(userData)
+    sortArray(userData.results)
 })

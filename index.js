@@ -16,9 +16,15 @@ use the existing "avatar" code to add employees to the screen
 */
 
 
+const container = document.querySelector('.container');
+fetch('https://randomuser.me/api/?results=50')
+.then(res => res.json())
+.then (res => {
+    userData = (res)
+
 const newArray = userData.results.map( (user) => {
     return {
-        picture : `${user.picture.thumbnail}`,
+        picture : user.picture.large || user.picture.medium || user.picture.thumbmail,
         name : `${user.name.first} ${user.name.last}`,
         location : `${user.location.street} 
         ${user.location.city} ${user.location.state}
@@ -28,9 +34,6 @@ const newArray = userData.results.map( (user) => {
     }
     
 });
-
-
-const container = document.querySelector('.container');
 
 // Destructuring: 
 newArray.forEach( ({picture, name, location, email, phone}) => {
@@ -57,5 +60,4 @@ newArray.forEach( ({picture, name, location, email, phone}) => {
 container.appendChild(avatar)
 })
 
-
-
+})

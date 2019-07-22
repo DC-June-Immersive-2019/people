@@ -16,9 +16,6 @@ use the existing "avatar" code to add employees to the screen
 */
 
 
-
-
-
 const newArray = userData.results.map( (user) => {
     return {
         picture : `${user.picture.thumbnail}`,
@@ -31,3 +28,34 @@ const newArray = userData.results.map( (user) => {
     }
     
 });
+
+
+const container = document.querySelector('.container');
+
+// Destructuring: 
+newArray.forEach( ({picture, name, location, email, phone}) => {
+    const avatar = document.createElement('section');
+    avatar.classList.add('avatar')
+    avatar.innerHTML = `<div class="avatar-image">
+        <img src="${picture}" alt="${name}"/>
+    </div>
+    <div class="avatar-content">
+        <h2 class="avatar-header">${name}</h2>
+        <div class="avatar-location">
+            ${location}
+        </div>
+        <ul class="avatar-contact-list">
+            <li class="avatar-contact-list-item">
+                <a href="mailto:${email}">✉</a>
+            </li>
+            <li class="avatar-contact-list-item">
+                <a href="tel:${phone}">✆</a> 
+            </li>
+        </ul>
+    </div>`;
+
+container.appendChild(avatar)
+})
+
+
+

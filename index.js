@@ -1,66 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log(`It's better to burn out than to fade away.`);
 });
-const container = document.querySelector('.container');
-// function createEmployee(picture, name, locationText, mail, pNum) {
-
-    
-//     const newSection = document.createElement('section');
-//     newSection.classList.add('avatar');
-    
-//     const avatarImageDiv = document.createElement('div');
-//     avatarImageDiv.classList.add('avatar-image');
-//     newSection.appendChild(avatarImageDiv);
-    
-//     const newImg = document.createElement('img');
-//     newImg.setAttribute('src', picture);
-//     newImg.setAttribute('alt', name);
-//     avatarImageDiv.appendChild(newImg);
-    
-//     const avatarContentDiv = document.createElement('div');
-//     avatarContentDiv.classList.add('avatar-content');
-//     newSection.appendChild(avatarContentDiv);
-    
-//     const nameHeader = document.createElement('h2');
-//     nameHeader.classList.add('avatar-header');
-//     nameHeader.innerHTML = name;
-//     avatarContentDiv.appendChild(nameHeader);
-    
-//     const locationDiv = document.createElement('div');
-//     locationDiv.classList.add('avatar-location');
-//     locationDiv.innerHTML = locationText;
-//     avatarContentDiv.appendChild(locationDiv);
-    
-//     const contactList = document.createElement('ul');
-//     contactList.classList.add('avatar-contact-list');
-//     avatarContentDiv.appendChild(contactList);
-    
-//     const listItem1 = document.createElement('li');
-//     listItem1.classList.add('avatar-contact-list-item');
-//     contactList.appendChild(listItem1);
-    
-//     const contactEmail = document.createElement('a');
-//     contactEmail.setAttribute('href', mail);
-//     contactEmail.innerHTML = '✉';
-//     listItem1.appendChild(contactEmail);
-    
-//     const listItem2 = document.createElement('li');
-//     listItem2.classList.add('avatar-contact-list-item');
-//     contactList.appendChild(listItem2);
-    
-//     const contactNumber = document.createElement('a');
-//     contactNumber.setAttribute('href', pNum);
-//     contactNumber.innerHTML = '✆';
-//     listItem2.appendChild(contactNumber);
-
-//     employeeContainer.appendChild(newSection);
-    
-//     console.log(newSection);
-// }
+const employeeContainer = document.querySelector('.container');
 
 
 function createEmployee2(el) {
     const newEmployee = document.createElement('div');
+    newEmployee.classList.add('AppElement');
+    newEmployee.id = ('AppComponent');
     newEmployee.innerHTML = 
     `<section class="avatar">
 <div class="avatar-image">
@@ -81,7 +28,7 @@ function createEmployee2(el) {
     </ul>
 </div>
 </section>`;
-    container.appendChild(newEmployee);
+    employeeContainer.appendChild(newEmployee);
 };
 // createEmployee2();
 const bootyData = userData.results.map(element => {
@@ -98,7 +45,73 @@ const bootyData = userData.results.map(element => {
 console.log(bootyData);
 bootyData.map(createEmployee2);
 
+const body = document.querySelector('body');
 
+body.style.display = 'flex';
+body.style.flexDirection = 'column';
+employeeContainer.style.order = '5';
+
+const searchBarContainer = document.createElement('div');
+searchBarContainer.style.backgroundColor = "gray";
+searchBarContainer.style.height = '100px';
+searchBarContainer.style.width = '100vw';
+searchBarContainer.style.order = '1';
+body.appendChild(searchBarContainer);
+console.log(body);
+
+const searchBarList = document.createElement('ol');
+searchBarList.style.height = '100px';
+searchBarList.style.display = 'flex';
+searchBarList.style.margin = '0';
+searchBarList.style.padding = '0';
+searchBarList.style.justifyContent = 'space-evenly';
+searchBarList.style.alignItems = 'center';
+searchBarList.addEventListener('click', filterByLastName);
+searchBarContainer.appendChild(searchBarList);
+
+const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'other', 'reset'];
+Letters.forEach( let => {
+    const searchBarLetters = document.createElement('li');
+    searchBarLetters.classList.add('letter');
+    searchBarLetters.style.listStyle = 'none';
+    searchBarLetters.style.color = 'black';
+    searchBarLetters.style.backgroundColor = 'white';
+    searchBarLetters.style.padding = '10px';
+    searchBarLetters.style.border = 'black 1px solid'
+
+    searchBarList.appendChild(searchBarLetters);
+    searchBarLetters.innerHTML = let;
+})
+
+// Filter by Last Name
+function filterByLastName(event) {
+    // If an item (not the container) is clicked
+    if (event.target !== event.currentTarget) {
+        // if 'reset' is selected
+        if (event.target.innerHTML === 'reset') {
+            employeeContainer.innerHTML = ""
+            bootyData.map(createEmployee2)
+        // if 'other' is selected, populate with non-alphabet names
+        } else if (event.target.innerHTML === 'other') {
+            const filteredBootyData = bootyData.filter(
+                item => !Letters.includes(item.name[0].toUpperCase())
+                );
+            employeeContainer.innerHTML = ""
+            filteredBootyData.map(createEmployee2)
+        }
+        // else, populate according to the selected letter
+        else {
+            const filteredBootyData = bootyData.filter(
+                item => event.target.innerHTML.toLowerCase() === item.name.toLowerCase()[0]
+                );
+            employeeContainer.innerHTML = ""
+            filteredBootyData.map(createEmployee2)
+        }
+    }
+}
+
+// Default display All
+bootyData.map(createEmployee2);
 
 /*
 

@@ -107,3 +107,17 @@ h1 {
 .avatar-contact-list a:hover {
     background-color: var(--secondary);
 }
+.CharacterContainer {
+    text-align: center;
+    font-size: 1.4em;
+    line-height: 3em;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    height: 10vh;
+}
+
+.Inactive {
+  color: grey;
+  cursor: default;
+}

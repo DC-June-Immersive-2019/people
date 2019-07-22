@@ -9,46 +9,56 @@ const Avatar = document.querySelector('.avatar');
 
 const body = document.querySelector(`body`);
 
-const searchList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','reset'];
 
-const buttonContainer = document.createElement('div');
-Container.prepend(buttonContainer)
-searchList.forEach(function(letter){
-    let newButton = document.createElement('button');
-    buttonContainer.appendChild(newButton);
-    newButton.innerHTML= letter;
-    newButton.addEventListener('click', buttonClick)
 
-})
+fetch(`https://randomuser.me/api/?results=1000`).then(res=>res.json()).then(res=>{
+    const searchList = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','reset'];
 
-var filtered = userData.results;
+    const buttonContainer = document.createElement('div');
+    Container.prepend(buttonContainer)
+    searchList.forEach(function(letter){
+        let newButton = document.createElement('button');
+        buttonContainer.appendChild(newButton);
+        newButton.innerHTML= letter;
+        newButton.addEventListener('click', buttonClick)
 
-function buttonClick(event){
-    filtered = userData.results.filter(function(data){
+    })
+    var filtered = res.results
+    console.log(res.results)
+    function buttonClick(event){
+    filtered = res.results.filter(function(data){
         if (event.target.innerHTML === 'reset'){
-            return userData.results
+            return res.results
         }else{
             return data.name.last[0] === event.target.innerHTML;
         }
     })
+    
+    console.log(filtered)
     console.log(event.target.innerHTML)
     let currentAvas = document.body.querySelectorAll('section'); 
+    console.log(currentAvas)
     currentAvas.forEach(function(item){
         if(item.classList.contains('hidden')) {}
         else{
+            console.log('hi')
             item.remove();
         }
     })
-    toFilter()
+    toFilter(filtered)
 }
-  
-console.log(userData);
+   toFilter(filtered);
+});
 
-function toFilter() {
-    filtered.forEach(function(element, index) {
+
+  
+
+function toFilter(filtered) {
+    
+    filtered.forEach(function(element) {
         let avatarClone = Avatar.cloneNode(true) ;
 
-        avatarClone.classList.remove('.hidden')
+        avatarClone.classList.remove('hidden')
 
         let fullName = `${element.name.first} ${element.name.last}`
         console.log(fullName)
@@ -83,7 +93,6 @@ function toFilter() {
 
     });
 }
-toFilter()
 /*
 
 We are going to create an Employee address book.  We will

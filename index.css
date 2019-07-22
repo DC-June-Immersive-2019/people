@@ -63,7 +63,7 @@ h1 {
     border-radius: 50%;
 }
 
-.avatar .hidden {
+.avatar.hidden {
     display: none;
 }
 

@@ -138,7 +138,6 @@ searchBarContainer.style.height = '100px';
 searchBarContainer.style.width = '100vw';
 searchBarContainer.style.order = '1';
 body.appendChild(searchBarContainer);
-console.log(body);
 
 const searchBarList = document.createElement('ol');
 searchBarList.style.height = '100px';
@@ -150,7 +149,7 @@ searchBarList.style.alignItems = 'center';
 searchBarList.addEventListener('click', filterByLastName);
 searchBarContainer.appendChild(searchBarList);
 
-const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'reset'];
+const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'other', 'reset'];
 Letters.forEach( let => {
     const searchBarLetters = document.createElement('li');
     searchBarLetters.classList.add('letter');
@@ -166,20 +165,26 @@ Letters.forEach( let => {
 
 // Filter by Last Name
 function filterByLastName(event) {
+    // If an item (not the container) is clicked
     if (event.target !== event.currentTarget) {
-
+        // if 'reset' is selected
         if (event.target.innerHTML === 'reset') {
-            const currentPeople = document.querySelectorAll('.avatar')
             employeeContainer.innerHTML = ""
             updatedData.map(createEmployee2)
-        } else {
+        // if 'other' is selected, populate with non-alphabet names
+        } else if (event.target.innerHTML === 'other') {
+            const filteredUpdatedData = updatedData.filter(
+                item => !Letters.includes(item.firstName[0].toUpperCase())
+                );
+            employeeContainer.innerHTML = ""
+            filteredUpdatedData.map(createEmployee2)
+        }
+        // else, populate according to the selected letter
+        else {
             const filteredUpdatedData = updatedData.filter(
                 item => event.target.innerHTML.toLowerCase() === item.lastName.toLowerCase()[0]
                 );
-
-            const currentPeople = document.querySelectorAll('.avatar');
             employeeContainer.innerHTML = ""
-
             filteredUpdatedData.map(createEmployee2)
         }
     }

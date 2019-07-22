@@ -17,6 +17,8 @@ use the existing "avatar" code to add employees to the screen
 
 const employeeContainer = document.querySelector('.container');
 
+
+// // Create employee section
 // const picture = 'https://randomuser.me/api/portraits/men/3.jpg';
 // const name = "albert fleming";
 // const locationText = "7693 westmoreland street<br/> arklow, offaly<br/>54657";
@@ -77,11 +79,14 @@ const employeeContainer = document.querySelector('.container');
 //     // console.log(newSection);
 // }
     
+// // Populate for each employee
 // userData.results.forEach(makeEmployee);
 // function makeEmployee(element) {
     // createEmployee(element.picture.large, element.name.first + " " + element.name.last, element.location.street +'<br>' + element.location.city + element.location.state + "<br>" + element.location.postcode, element.email, element.cell);
 // }
 
+
+// Populate for each employee
 function createEmployee2(el) {
     const newSection2 = document.createElement('div');
     newSection2.innerHTML =`
@@ -90,7 +95,7 @@ function createEmployee2(el) {
                 <img src="${el.picture}" alt="${el.name}"/>
             </div>
             <div class="avatar-content">
-                <h2 class="avatar-header">${el.name}</h2>
+                <h2 class="avatar-header">${el.firstName} ${el.lastName}</h2>
                 <div class="avatar-location">
                 ${el.address}
                 </div>
@@ -107,14 +112,78 @@ function createEmployee2(el) {
         employeeContainer.appendChild(newSection2);
 }
 
-
-
+// Map dataset to return the data that we need.
 const updatedData = userData.results.map(element => { 
     return {
     'picture':element.picture.large, 
-    'name': element.name.first + " " + element.name.last, 
+    'firstName': element.name.first,
+    'lastName': element.name.last, 
     'address': element.location.street +'<br>' + element.location.city + element.location.state + "<br>" +          element.location.postcode, 
     'email': element.email, 
     'phone': element.cell}})
 
+// Create the employee set using the new Map dataset
+// updatedData.map(createEmployee2);
+
+// Create Search Bar
+const body = document.querySelector('body');
+
+body.style.display = 'flex';
+body.style.flexDirection = 'column';
+employeeContainer.style.order = '5';
+
+const searchBarContainer = document.createElement('div');
+searchBarContainer.style.backgroundColor = "pink";
+searchBarContainer.style.height = '100px';
+searchBarContainer.style.width = '100vw';
+searchBarContainer.style.order = '1';
+body.appendChild(searchBarContainer);
+console.log(body);
+
+const searchBarList = document.createElement('ol');
+searchBarList.style.height = '100px';
+searchBarList.style.display = 'flex';
+searchBarList.style.margin = '0';
+searchBarList.style.padding = '0';
+searchBarList.style.justifyContent = 'space-evenly';
+searchBarList.style.alignItems = 'center';
+searchBarList.addEventListener('click', filterByLastName);
+searchBarContainer.appendChild(searchBarList);
+
+const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'reset'];
+Letters.forEach( let => {
+    const searchBarLetters = document.createElement('li');
+    searchBarLetters.classList.add('letter');
+    searchBarLetters.style.listStyle = 'none';
+    searchBarLetters.style.color = 'black';
+    searchBarLetters.style.backgroundColor = 'white';
+    searchBarLetters.style.padding = '10px';
+    searchBarLetters.style.border = 'black 1px solid'
+
+    searchBarList.appendChild(searchBarLetters);
+    searchBarLetters.innerHTML = let;
+})
+
+// Filter by Last Name
+function filterByLastName(event) {
+    if (event.target !== event.currentTarget) {
+
+        if (event.target.innerHTML === 'reset') {
+            const currentPeople = document.querySelectorAll('.avatar')
+            employeeContainer.innerHTML = ""
+            updatedData.map(createEmployee2)
+        } else {
+            const filteredUpdatedData = updatedData.filter(
+                item => event.target.innerHTML.toLowerCase() === item.lastName.toLowerCase()[0]
+                );
+
+            const currentPeople = document.querySelectorAll('.avatar');
+            employeeContainer.innerHTML = ""
+
+            filteredUpdatedData.map(createEmployee2)
+        }
+    }
+}
+
+// Default display All
 updatedData.map(createEmployee2);

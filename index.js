@@ -19,80 +19,73 @@ const infoArray = userData.results.map ( (user) => {
         email : `${user.email}`,
         telephone :`${user.phone}`
     }
-
 });
 
-
 //destructuring:: 
-infoArray.forEach(({picture,name,location1,telephone, email}) => {
-    const card = document.createElement('section')
-    card.classList.add("avatar")
-    card.innerHTML = `<div class="avatar-image">
-    <img src="${picture}" alt="${name}"/>
-    </div>
-    <div class="avatar-content">
-    <h2 class="avatar-header">${name}</h2>
-    <div class="avatar-location">
-    ${location1}
-    </div>
-    <ul class="avatar-contact-list">
-    <li class="avatar-contact-list-item">
-    <a href="mailto:${email}">✉</a>
-    </li>
-    <li class="avatar-contact-list-item">
-    <a href="tel:${telephone}">✆</a> 
-    </li>
-    </ul>
-    </div>`;
-    container.appendChild(card)
+const addCard = (newArray) => {
+    container.innerHTML = ""
+    newArray.forEach(({picture,name,location1,telephone, email}) => {
+        const card = document.createElement('section')
+        card.classList.add("avatar")
+        card.innerHTML = `<div class="avatar-image">
+        <img src="${picture}" alt="${name}"/>
+        </div>
+        <div class="avatar-content">
+        <h2 class="avatar-header">${name}</h2>
+        <div class="avatar-location">
+        ${location1}
+        </div>
+        <ul class="avatar-contact-list">
+        <li class="avatar-contact-list-item">
+        <a href="mailto:${email}">✉</a>
+        </li>
+        <li class="avatar-contact-list-item">
+        <a href="tel:${telephone}">✆</a> 
+        </li>
+        </ul>
+        </div>`;
+        container.appendChild(card)
+    })
+};
+addCard(infoArray)
+
+const search = document.querySelector('.search');
+search.addEventListener('click', (e)=>{
+    if (e.target != e.currentTarget){
+       const filteredData = infoArray.filter(person =>{
+        //    console.log(e.target.innerText,person.name.split(" ")[1][0])
+           return e.target.innerText.toLowerCase() === person.name.split(" ")[1][0]
+
+        })
+        addCard(filteredData)
+    }
 });
 
 })
 
 
+const search = document.querySelector('.search');
 
 
 
+const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const ul = document.createElement('ul');
+ul.style.display="flex";
+ul.style.listStyle = 'none';
+search.appendChild(ul);
+search.style.border = "1px solid white";
+search.style.display = 'flex';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const search = document.querySelector('.search');
-// search.addEventListener('click', ()=>{
-//     console.log('click')
-// });
-
-// const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-// const order = document.createElement('ul')
-// order.style.display="flex"
-// order.style.listStyle = 'none'
-// search.style.justifyContent = 'space-evenly'
-// search.appendChild(order)
-// search.style.border = "1px solid white"
-// search.style.display = 'flex'
-
-// alphaArray = alpha.split("")
-// console.log(alphaArray)
-
-// alphaArray.forEach((i) => {
-//     const btn = document.createElement('li')
-//     btn.innerHTML = i
-//     order.appendChild(btn)
-    
-// })
-
+alphaArray = alpha.split("")
+console.log(alphaArray)
+alphaArray.forEach((i) => {
+    const btn = document.createElement('li')
+    btn.innerHTML = i
+    btn.style.border = '1px white solid'
+    btn.style.margin = "15px 5px"
+    btn.style.padding = '10px'
+    ul.appendChild(btn)
+})
 
 
 

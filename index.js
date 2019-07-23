@@ -1,16 +1,8 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log(`It's better to burn out than to fade away.`);
 });
 const container = document.querySelector(".container");
 
-
-// letters.addEventListener('click',e){
-
-// }
-    //fetch(`https://randomuser.me/api/?results=50`);
-
-    
 function gumDrops(userDataArray){
     container.innerHTML = "";
         userDataArray.forEach(function(result, person) {
@@ -42,7 +34,6 @@ function gumDrops(userDataArray){
             })
     }
 
-
 function loadAvatar(){
     fetch('https://randomuser.me/api?results=50')
     .then(res => res.json())
@@ -61,45 +52,13 @@ letters.forEach(e => {
     })
 });
 document.querySelector(".lettercontainer").appendChild(letterDisplay);
-
-
-
-
-
-
-
-    gumDrops(userData.results)
+gumDrops(userData.results)
 });
-
 }
 
-console.log()
-
-
-
-    // div = container.appendChild(letters);
-    // console.log(letters)
-    
-    // result.name.last.split()
-    //if(split value = "letter user clicked on")
-    //return letters
-
-
-
-
 loadAvatar();
-//container.appendChild(avatar);
-//console.log(avatar);
 
-//const image = document.querySelector('avatar-image');
-
-/*const name
-const location
-const email
-const phone
-*/
 /*
-
 We are going to create an Employee address book.  We will
 use the existing "avatar" code to add employees to the screen
 
@@ -107,6 +66,5 @@ use the existing "avatar" code to add employees to the screen
     the people.js file and show all the users on the page
 2)  Add a filter to the data to only return users whose last
     name start with a given letter
-
 */
     

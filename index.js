@@ -70,9 +70,8 @@ document.addEventListener('DOMContentLoaded', start);
 inputContainer.addEventListener('click', (e) =>{
     if (e.target === submit) {
         const searchParam = search.value.toLowerCase()
-        console.log(searchParam);
         const filteredUsers = currentRoster.filter(function (person) {
-            return person.name.includes(search.value)
+            return person.name.includes(searchParam)
         })
         makeAvatars(filteredUsers)
     }

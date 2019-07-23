@@ -1,3 +1,4 @@
+
 :root {
     box-sizing: border-box;
     --bg : #25283D;
@@ -9,7 +10,9 @@
 }
 body {
     background-color: #000;  
-    color: var(--txt);  
+    color: var(--txt); 
+    display:flex;
+    flex-direction:column; 
 }
 *,*::before,*::after {
     box-sizing: inherit;
@@ -106,4 +109,11 @@ h1 {
 }
 .avatar-contact-list a:hover {
     background-color: var(--secondary);
+}
+.look{
+    display: flex;
+    justify-content: space-around;
+}
+button.target{
+    cursor: pointer;
 }

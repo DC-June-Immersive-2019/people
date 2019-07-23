@@ -32,6 +32,7 @@ h1 {
     align-items: flex-start;
     padding: 1rem;
     flex-wrap: wrap;
+    clear: both;
 }
 
 .avatar {
@@ -106,4 +107,19 @@ h1 {
 }
 .avatar-contact-list a:hover {
     background-color: var(--secondary);
+}
+nav {
+    display: flex;
+    justify-content: center;
+}
+nav li {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border: 1px solid white;
+    text-align: center;
+}
+li:hover {
+    color: black;
+    background-color: white;
 }

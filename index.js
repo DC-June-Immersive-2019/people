@@ -1,6 +1,6 @@
 // document.addEventListener('DOMContentLoaded', () => {
 //     console.log(`It's better to burn out than to fade away.`);
-// });
+// }); test
 
 const container = document.querySelector('.container');
 fetch(`https://randomuser.me/api/?results=50`)
